@@ -1,0 +1,688 @@
+:root {
+  --sky-deep: #a9cbe0;
+  --sky-mid: #cfe4ef;
+  --sky-pale: #eef6fa;
+  --cloud-white: #fdfefe;
+  --ink: #2f4a5e;
+  --ink-soft: #587792;
+  --gold: #c6a15b;
+  --gold-soft: #dcc79a;
+  --gold-light: #efe0c2;
+  --divider: rgba(198, 161, 91, 0.45);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--sky-pale);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 45%),
+    radial-gradient(ellipse at 85% 100%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(180deg, var(--sky-pale) 0%, var(--sky-mid) 55%, var(--sky-deep) 100%);
+  position: relative;
+  padding: 52px 16px 32px;
+}
+
+/* -------- nubes decorativas de fondo -------- */
+.cloud {
+  position: fixed;
+  opacity: 0.95;
+  filter: blur(0.5px);
+  pointer-events: none;
+  z-index: 0;
+  animation: drift 60s linear infinite alternate;
+}
+
+.cloud svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cloud--1 {
+  width: 260px;
+  top: 8%;
+  left: -10%;
+  animation-duration: 45s;
+}
+
+.cloud--2 {
+  width: 180px;
+  top: 65%;
+  left: -15%;
+  animation-duration: 60s;
+  animation-delay: -20s;
+}
+
+.cloud--3 {
+  width: 220px;
+  top: 38%;
+  left: -12%;
+  animation-duration: 50s;
+  animation-delay: -45s;
+  opacity: 0.35;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(140vw);
+  }
+}
+
+/* -------- envoltorio de la invitación (permite que el sello sobresalga) -------- */
+.invite-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  z-index: 1;
+}
+
+/* -------- tarjeta principal -------- */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: min(720px, 88vh);
+  background: linear-gradient(180deg, var(--cloud-white) 0%, #f4fafd 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 30px 60px -20px rgba(47, 74, 94, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  padding: 56px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* esquinas ornamentales en lugar de un marco completo: más moderno */
+.corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--gold);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.corner--tl {
+  top: 14px;
+  left: 14px;
+  border-width: 1px 0 0 1px;
+}
+
+.corner--tr {
+  top: 14px;
+  right: 14px;
+  border-width: 1px 1px 0 0;
+}
+
+.corner--bl {
+  bottom: 14px;
+  left: 14px;
+  border-width: 0 0 1px 1px;
+}
+
+.corner--br {
+  bottom: 14px;
+  right: 14px;
+  border-width: 0 1px 1px 0;
+}
+
+/* cruz de agua muy sutil, como marca de fondo */
+.card::after {
+  content: "";
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  width: 420px;
+  height: 420px;
+  transform: translate(-50%, -52%);
+  background:
+    linear-gradient(var(--gold-soft), var(--gold-soft)) center/3px 220px no-repeat,
+    linear-gradient(var(--gold-soft), var(--gold-soft)) center 34%/160px 3px no-repeat;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* -------- sello / medallón superior -------- */
+.seal {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92px;
+  height: 92px;
+  z-index: 3;
+  opacity: 0;
+  animation: seal-in 1.1s cubic-bezier(.2, .8, .2, 1) forwards;
+  animation-delay: .15s;
+}
+
+@keyframes seal-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px) scale(.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.seal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #ffffff, var(--gold-light) 55%, var(--gold-soft) 100%);
+  box-shadow:
+    0 10px 24px -8px rgba(47, 74, 94, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+}
+
+.seal::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.seal-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  opacity: 0.5;
+}
+
+.seal-emblem {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-emblem svg {
+  width: 90px;
+  height: 90px;
+  color: var(--gold);
+  filter: drop-shadow(0 0 8px rgba(198, 161, 91, 0.5));
+}
+
+/* brillo que recorre el sello una sola vez */
+.seal-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.seal-shine::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -140%;
+  width: 60%;
+  height: 180%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+  transform: rotate(18deg);
+  animation: shine 2.6s ease-out 1.1s 1;
+}
+
+@keyframes shine {
+  to {
+    left: 160%;
+  }
+}
+
+.eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+}
+
+.divider {
+  width: 130px;
+  height: 14px;
+  margin: 18px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.divider::after {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.divider svg {
+  width: 23px;
+  height: 23px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.verse-ref {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 14px;
+}
+
+/* -------- secuencia de escenas -------- */
+.scenes {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 1.1s ease, transform 1.1s ease, visibility 0s linear 1.1s;
+}
+
+.scene.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 1.1s ease, transform 1.1s ease, visibility 0s linear 0s;
+}
+
+/* ===== Escena 1: nombre ===== */
+.child-name {
+  font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 6px 0 6px;
+  word-spacing: 2px;
+
+  .title {
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  .name {
+    font-weight: 600;
+    font-size: clamp(26px, 6.4vw, 40px);
+  }
+}
+
+.child-name em {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 0.46em;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 340px;
+  margin-top: 10px;
+}
+
+/* ===== Escena 2: familia ===== */
+.scene-icon {
+  width: 35px;
+  height: 35px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.scene-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 900;
+  margin-top: -5px;
+  /* margin-bottom: 26px; */
+}
+
+.family-block {
+  margin-bottom: 20px;
+}
+
+.family-block:last-child {
+  margin-bottom: 0;
+}
+
+.role-label {
+  font-size: 14px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.role-names {
+  font-family: 'Cormorant Garamond', serif;
+  /* font-size: clamp(17px, 4.6vw, 22px); */
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.amp {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gold);
+  margin: 2px 0;
+}
+
+/* ===== Escena 3: detalles ===== */
+.details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.detail-item2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+  margin-top: -10px;
+}
+
+.detail-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid var(--divider);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  background: rgba(198, 161, 91, 0.06);
+}
+
+.detail-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--gold);
+}
+
+.detail-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.detail-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  font-weight: 500;
+  max-width: 320px;
+}
+
+.detail-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--ink-soft);
+  /* margin-bottom: -50px */
+}
+
+/* -------- indicadores -------- */
+.dots {
+  display: flex;
+  gap: 9px;
+  margin-top: 24px;
+  z-index: 2;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(88, 119, 146, 0.25);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: none;
+  padding: 0;
+}
+
+.dot.is-active {
+  background: var(--gold);
+  transform: scale(1.3);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* barra dorada de cierre al pie de la tarjeta */
+.foot-bar {
+  width: 100%;
+  height: 4px;
+  margin-top: 18px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-soft), var(--gold), var(--gold-soft), transparent);
+  opacity: 0.7;
+}
+
+/* botón de confirmación de asistencia */
+.confirmacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.confirm-btn {
+  background: linear-gradient(90deg, #b8863f, #d9b968 50%, #b8863f);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 15px;
+  box-shadow: 0 8px 20px rgba(184, 134, 63, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 320px;
+  margin-top: -10px;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(184, 134, 63, 0.55);
+}
+
+/* tercer section, confirmacion */
+#confirmacion{
+  background: #fff;              /* fondo blanco */
+  border-radius: 6px;            /* esquinas suaves */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25); /* sombra para destacarlo */
+  padding: 24px;                 /* espacio interno */
+  max-width: 520px;              /* ancho similar a la tarjeta */
+  margin: 0 auto;                /* centrado horizontal */
+  position: relative;            /* para que respete el stacking */
+  z-index: 5;                    /* encima de las nubes */
+}
+.map-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+}
+.map-btn {
+  background: linear-gradient(90deg, #0056A6, #007BFF 50%, #0056A6);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  box-shadow: 0 8px 20px rgba(0, 86, 166, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 60%;
+  max-width: 320px;
+  margin-bottom: 12px;
+  align-self: center;
+}
+
+.confirm-btn:hover, .map-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 86, 166, 0.55);
+}
+
+.countdown {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0056A6;
+}
+
+/* Poner responsive */
+@media (max-width: 400px) {
+  .card {
+    padding: 54px 22px 30px;
+    /* Reducir tamaño de la tarjeta */
+    min-height: min(580px, 75vh);
+    padding: 40px 20px 24px;
+    /* opción Gris */
+    /* background: linear-gradient(180deg, #f2f2f2 0%, #d9d9d9 100%); */
+    /* opción beige  */
+    background: linear-gradient(180deg, #f5f0e6 0%, #e0d6c9 100%);
+  }
+
+  .seal { width: 78px; height: 78px; top: -40px; }
+
+  .seal-emblem svg { width: 42px; height: 42px; }
+
+  .message { font-size: 17px; }
+
+  body {
+    /* Fondo más azul en móviles */
+    background: linear-gradient(180deg, var(--sky-mid) 0%, var(--sky-deep) 100%);
+  }
+
+  .confirm-btn {
+    font-size: 0.7rem;
+    padding: 7px 30px;
+    /* max-width: 90%; */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud {
+    animation: none;
+  }
+
+  .scene {
+    transition: opacity 0.4s ease;
+    transform: none;
+  }
+
+  .seal {
+    animation: none;
+    opacity: 1;
+  }
+
+  .seal-shine::before {
+    animation: none;
+    display: none;
+  }
+}
