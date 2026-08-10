@@ -2,7 +2,7 @@
   var scenes = Array.from(document.querySelectorAll('.scene'));
   var dots = Array.from(document.querySelectorAll('.dot'));
   var current = 0;
-  var AUTO_DELAY = 6200; // ms entre escenas automáticas
+  var AUTO_DELAY = 8200; // ms entre escenas automáticas
   var timer = null;
 
   function show(index) {
